@@ -1,0 +1,4 @@
+__pycache__
+*.pyc
+.conda
+ipynb_checkpoints
