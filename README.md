@@ -25,14 +25,14 @@ We give code for the dynamic programming algorithm in `dpdp.py`. This follows th
 ### Finite-state machine
 
 We can also express the objective used in Kamper's [paper](https://arxiv.org/abs/2202.11929) as a weighted finite-state transducer (WFST).
-Below, we show this WFST for 2 codebook entries (a and b) and 3 time steps (1,2,3).\
+Below, we show this WFST for 2 codebook entries (a and b) and 3 time steps (1,2,3).
 
 ![image](dpdp-wfst.svg)
 
 $q_{tk}$ is defined as the cost of quantizing the $t^\mathrm{th}$ feature to the $k^\mathrm{th}$ codebook entry.
 $q_{tk} = \| \mathbf{x}_t - \mathbf{c}_k \|^2$
 
-We give code for finding DPDP units with this WFST in `dpdpwfst.py`.
+We give code for finding DPDP units with this WFST in `dpwfst.py`.
 This implementation uses the [k2](https://github.com/k2-fsa/k2) library.
 It runs natively in PyTorch on the CPU or GPU.
 
@@ -60,7 +60,7 @@ We found the units to be slightly favorable compared to using the full codebook 
 
 ### Quickstart
 
-Follow this [guide](https://k2-fsa.github.io/k2/installation/pre-compiled-cuda-wheels-linux/index.html) to install PyTorch and k2 with CUDA support.
+Follow this [guide](https://k2-fsa.github.io/k2/installation/from_wheels.html) to install PyTorch and k2 with CUDA support.
 
 If you don't mind using an older version of PyTorch, you can use the following:
 
