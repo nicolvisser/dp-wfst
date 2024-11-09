@@ -1,4 +1,3 @@
-
 from typing import Optional
 
 import k2
@@ -11,6 +10,9 @@ def dpwfst(
     lmbda: float,
     num_neighbors: Optional[int] = None,
 ):
+    if features.dim() != 2:
+        raise NotImplementedError("Only works for 2D input")
+    
     assert features.device == codebook.device
     device = features.device
 

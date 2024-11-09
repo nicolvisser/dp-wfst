@@ -1,6 +1,7 @@
 import torch
 from typing import Optional
 
+
 @torch.jit.script
 def dpdp(
     features: torch.Tensor,
@@ -10,6 +11,7 @@ def dpdp(
 ):
     if features.dim() != 2:
         raise NotImplementedError("Only works for 2D input")
+    assert features.device == codebook.device
 
     T = features.shape[0]
     K = codebook.shape[0]
