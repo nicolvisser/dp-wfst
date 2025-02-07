@@ -13,10 +13,10 @@ This makes the DP-WFST algorithm much faster than the DPDP algorithm while still
 
 Duration-penalized dynamic programming (DPDP) is an algorithm that quantizes features to a codebook while encouraging bigger units.
 When the DPDP parameter ($\lambda$) is zero, DPDP finds the $K$-means predictions.
-When we increase $\lambda$, we encourage finding larger units - the higher $\lambda$ the larger the units.
+When we increase $\lambda$, we encourage finding larger units - the higher $\lambda$, the larger the units.
 
-Below, we show a visualization of the DPDP units for speech containing the words "Mister Quilter".
-Here can see how the DPDP units have durations more in line with the expected phone durations.
+Below, we show a visualization of the DPDP units for speech containing the words "Mister Quilter."
+Here, we see how the DPDP units have durations that are more in line with the expected phone durations.
 
 ![image](dpdp-visualization.svg)
 
@@ -25,7 +25,7 @@ We give code for the dynamic programming algorithm in `dpdp.py`. This follows th
 ### Finite-state machine
 
 We can also express the objective used in Kamper's [paper](https://arxiv.org/abs/2202.11929) as a weighted finite-state transducer (WFST).
-Below, we show this WFST for 2 codebook entries (a and b) and 3 time steps (1,2,3).
+Below, we show this WFST for two codebook entries (a and b) and 3 time steps (1,2,3).
 
 ![image](dpdp-wfst.svg)
 
@@ -47,10 +47,10 @@ Edges are placed between a codebook entry and a few nearest neighbors.
 
 ![image](codebook-visualization.svg)
 
-If the aim of the DPDP units is to find phone-like units, we can limit the search to a very small number of neigbors.
-We therefore include a `num_neighbors` parameter in the `dpwfst` function in `dpwfst.py`.
+If the aim of the DPDP units is to find phone-like units, we can limit the search to a very small number of neighbors.
+We, therefore, include a `num_neighbors` parameter in the `dpwfst` function in `dpwfst.py.`
 
-When using WavLM features and a codebook size of 500, we could limit the number of neigbors to as low as 4.
+When using WavLM features and a codebook size of 500, we could limit the number of neighbors to as low as 4, while still seeing a large reduction in bitrate.
 This speeds up the DP-WFST search significantly.
 We evaluated this assumption using ABX phone discriminability.
 We found the units to be slightly favorable compared to using the full codebook (K=500).
@@ -62,6 +62,12 @@ We found the units to be slightly favorable compared to using the full codebook 
 
 Follow this [guide](https://k2-fsa.github.io/k2/installation/from_wheels.html) to install PyTorch and k2 with CUDA support.
 
+You might need to install the CUDA toolkit.
+```sh
+sudo apt update
+sudo apt-get install nvidia-cuda-toolkit
+```
+
 If you don't mind using an older version of PyTorch, you can use the following:
 
 ```
@@ -69,7 +75,7 @@ pip install torch==2.0.1+cu117 -f https://download.pytorch.org/whl/torch/
 pip install k2==1.24.3.dev20230718+cuda11.7.torch2.0.1 -f https://k2-fsa.github.io/k2/cuda.html
 ```
 
-If you get stuck you can use the CPU only version.
+If you get stuck, you can use the CPU-only version.
 
 Then you can run the example in `example.ipynb`.
 
