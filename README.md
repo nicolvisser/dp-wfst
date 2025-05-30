@@ -67,7 +67,7 @@ We found the units to be slightly favorable compared to using the full codebook 
 
 Follow this [guide](https://k2-fsa.github.io/k2/installation/from_wheels.html) to install PyTorch and k2 with CUDA support.
 
-You might need to install the CUDA toolkit.
+You might need to install the CUDA toolkit first if you run into issues:
 ```sh
 sudo apt update
 sudo apt-get install nvidia-cuda-toolkit
@@ -80,6 +80,21 @@ pip install torch==2.0.1+cu117 -f https://download.pytorch.org/whl/torch/
 pip install k2==1.24.3.dev20230718+cuda11.7.torch2.0.1 -f https://k2-fsa.github.io/k2/cuda.html
 ```
 
-If you get stuck, you can use the CPU-only version.
+If you get stuck, you can use the CPU-only version. Just make sure your features and codebook tensors are on the CPU before calling `dpwfst()`.
 
-Then you can run the example in `example.ipynb`.
+```
+import torch
+from dpwfst import dpwfst
+
+features = torch.load("my_features") # [T, D]
+codebook = torch.load("my_codebook") # [K, D]
+
+units_duped = dpwfst(
+  features,
+  codebook,
+  lmbda=10, # <- you need to tune this
+  num_neighbors=10, # limits search to 10 entries per frame
+)
+```
+
+You can also check out the example in `example.ipynb`.
