@@ -68,6 +68,7 @@ We found the units to be slightly favorable compared to using the full codebook 
 Follow this [guide](https://k2-fsa.github.io/k2/installation/from_wheels.html) to install PyTorch and k2 with CUDA support.
 
 You might need to install the CUDA toolkit first if you run into issues:
+
 ```sh
 sudo apt update
 sudo apt-get install nvidia-cuda-toolkit
@@ -96,5 +97,3 @@ units_duped = dpwfst(
   num_neighbors=10, # limits search to 10 entries per frame
 )
 ```
-
-You can also check out the example in `example.ipynb`.
