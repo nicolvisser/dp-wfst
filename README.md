@@ -1,11 +1,15 @@
 # DP-WFST
 
-A weighted finite-state transducer (WFST) algorithm for duration-penalized dynamic programming.
+A weighted finite-state transducer (WFST) algorithm for duration-penalized dynamic programming (DPDP).
+DPDP is described in [Word Segmentation on Discovered Phone Units with Dynamic Programming and Self-Supervised Scoring](https://arxiv.org/abs/2202.11929)
 
-When used for acoustic unit discovery, the DP-WFST algorithm can discover phone-like units from speech models like HuBERT and WavLM.
+When used for acoustic unit discovery, DPDP discovers phone-like units from speech models like HuBERT and WavLM.
 
-Compared to the original DPDP algorithm, the DP-WFST algorithm is more flexible. In this formulation, we can limit the search to a few nearest neighbors of each feature vector.
-This makes the DP-WFST algorithm much faster than the DPDP algorithm while still being able to discover phone-like units.
+Compared to the original DPDP algorithm, the DP-WFST implementation allows us to limit the search to a few nearest neighbors of each feature vector.
+This makes the DP-WFST algorithm substantially faster than the DPDP algorithm while still being able to discover phone-like units.
+
+DP-WFST was used in our experiments in [Spoken Language Modeling with Duration-Penalized Self-Supervised Units](https://arxiv.org/abs/2505.23494).
+The paper does not give details about the algorithm, so we will briefly motivate it in this repo.
 
 ## Background
 
@@ -16,6 +20,7 @@ When the DPDP parameter ($\lambda$) is zero, DPDP finds the $K$-means prediction
 When we increase $\lambda$, we encourage finding larger units - the higher $\lambda$, the larger the units.
 
 Below, we show a visualization of the DPDP units for speech containing the words "Mister Quilter."
+This visualization uses HuBERT L7 features under the hood.
 Here, we see how the DPDP units have durations that are more in line with the expected phone durations.
 
 ![image](dpdp-visualization.svg)
@@ -78,10 +83,3 @@ pip install k2==1.24.3.dev20230718+cuda11.7.torch2.0.1 -f https://k2-fsa.github.
 If you get stuck, you can use the CPU-only version.
 
 Then you can run the example in `example.ipynb`.
-
-### For use in training frameworks
-
-I highly recommend using docker if you plan on using k2 during training.
-You can then use a more recent version of PyTorch while avoiding dependency hell.
-
-The `pytorch/pytorch:2.4.0-cuda12.1-cudnn9-runtime` docker image works well. You then only need to install the appropriate k2 wheels from [here](https://k2-fsa.github.io/k2/installation/pre-compiled-cuda-wheels-linux/index.html).
